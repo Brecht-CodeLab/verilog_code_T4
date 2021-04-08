@@ -1,0 +1,107 @@
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+array unset createdGroup
+array set createdGroup {}
+set id [waveform add -signals  {
+	xcelium::toplevel.clk
+	} ]
+set id [waveform add -signals  {
+	xcelium::toplevel.nrst
+	} ]
+set id [waveform add -signals  {
+	xcelium::toplevel.SWIPT_OUT0
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for V -min 1.0017328696245917e-09 -max 4.9986670211349349 -scale linear
+set id [waveform add -signals  {
+	xcelium::toplevel.SWIPT_OUT1
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for V -min 1.001732857213865e-09 -max 4.9986670413952927 -scale linear
+set id [waveform add -signals  {
+	xcelium::toplevel.SWIPT_OUT2
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for V -min -1.8129787612841675e-07 -max 4.9986671595348495 -scale linear
+set id [waveform add -signals  {
+	xcelium::toplevel.SWIPT_OUT3
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for V -min -1.5422843357981719e-07 -max 4.9986671816070025 -scale linear
+set id [waveform add -signals  {
+	xcelium::toplevel.inst_ANALOG_NETWORK.ADCn
+	} ]
+waveform format $id -trace analogSampleAndHold
+waveform axis range $id -for V -min 0.18115371818671094 -max 0.9380534243567854 -scale linear
+set id [waveform add -signals  {
+	xcelium::toplevel.inst_ANALOG_NETWORK.ADCp
+	} ]
+waveform format $id -trace analogSampleAndHold
+waveform axis range $id -for V -min 0.18112772323721554 -max 0.93812247628804313 -scale linear
+set id [waveform add -signals  {
+	{((-xcelium::toplevel.inst_ANALOG_NETWORK.ADCn) + xcelium::toplevel.inst_ANALOG_NETWORK.ADCp)}
+	} ]
+waveform format $id -trace analogSampleAndHold
+waveform axis range $id -for V -min -0.75683035875422033 -max 0.75662845596643691 -scale linear
+set id [waveform add -signals  {
+	{xcelium::toplevel.inst_ANALOG_NETWORK.XX3.L1.\1_$flow }
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for A -min -25.263715465996924 -max 25.236853609056723 -scale linear
+set id [waveform add -signals  {
+	{xcelium::toplevel.ADC_in[11:0]}
+	} ]
+set id [waveform add -signals  {
+	{xcelium::toplevel.inst_freq.new_highest[11:0]}
+	} ]
+set id [waveform add -signals  {
+	{xcelium::toplevel.inst_freq.lowest_so_far[11:0]}
+	} ]
+set id [waveform add -signals  {
+	{xcelium::toplevel.inst_freq.highest_so_far[11:0]}
+	} ]
+set id [waveform add -signals  {
+	xcelium::toplevel.inst_freq.lets_go
+	} ]
+set id [waveform add -signals  {
+	{xcelium::toplevel.inst_freq.counter_freq_opt[2:0]}
+	} ]
+set id [waveform add -signals  {
+	{xcelium::toplevel.freq[19:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	xcelium::toplevel.freq_rdy
+	} ]
+set id [waveform add -signals  {
+	xcelium::toplevel.freq_set_up_down
+	} ]
+set id [waveform add -signals  {
+	xcelium::toplevel.freq_optimum
+	} ]
+set id [waveform add -signals  {
+	xcelium::toplevel.data_go
+	} ]
+set id [waveform add -signals  {
+	xcelium::toplevel.data_start
+	} ]
+set id [waveform add -signals  {
+	xcelium::toplevel.d
+	} ]
+set id [waveform add -signals  {
+	{xcelium::toplevel.l[3:0]}
+	} ]
+set id [waveform add -signals  {
+	{xcelium::toplevel.inst_freq.threshold[19:0]}
+	} ]
+
+waveform xview limits 25.0353606789250368ms 99.9292786421499392ms

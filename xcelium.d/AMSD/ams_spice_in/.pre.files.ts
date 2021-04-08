@@ -1,0 +1,13 @@
+1615679214 /users/students/r0763954/Documents/EAGLE2/Simvision/EAGLE2_verilog_v8/amsSim.scs
+1613398594 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/ANALOG_NETWORK.spi
+1606909796 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/DI_10A01.spi
+1606909796 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/LM7812.spi
+1606909796 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/Ideal_adc.spi
+1606988305 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/LM7805.spi
+1606909796 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/DI_BAV5004LP.spi
+1606909796 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/OPA2344.spi
+1606909796 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/IR2110.spi
+1606909797 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/irfs_sl7440pbf.spi
+1606909796 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/TLV2372.spi
+1606909796 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/ST_BAT48.spi
+1607121801 /users/students/r0763954/Documents/EAGLE2/Simvision/Global_T2_verilog_v8/LMV7219.spi

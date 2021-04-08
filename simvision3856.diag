@@ -1,0 +1,96 @@
+*** Message Type: info ***
+When: Sun Dec 13 04:41:41 PM CET 2020
+SimVision started.
+Version: TOOL:  simvision(64)   19.03-s013
+User: r0763954
+Host: vierre64-tmp3.esat.kuleuven.be
+Platform: Linux/x86_64/3.10.0-1160.6.1.el7.x86_64
+Started: Sun Dec 13 04:41:41 PM CET 2020
+Command: /esat/micas-data/software/Cadence/xcelium_19.03/tools.lnx86/simvision/bin/64bit/simvision.exe -connect dc:vierre64-tmp3.esat.kuleuven.be:34578 -64BIT -nocopyright
+Work Directory: /users/students/r0763954/Documents/EAGLE2/Simvision/EAGLE2_verilog_v5
+ 
+*** Message Type: info ***
+When: Sun Dec 13 04:41:42 PM CET 2020
+Create browser window: "Design Browser 1"
+ 
+*** Message Type: info ***
+When: Sun Dec 13 04:41:48 PM CET 2020
+Create console window: "Console"
+ 
+*** Message Type: info ***
+When: Sun Dec 13 04:41:53 PM CET 2020
+Connect to Simulator
+      Design: worklib.Counter:v
+   Languages: verilog verilog-ams
+   Simulator: XM-Sim
+     Version: TOOL:      xmsim(64)       19.03-s013
+        User: r0763954
+        Host: vierre64-tmp3.esat.kuleuven.be
+Time Started: Sun Dec 13 04:41:40 PM CET 2020
+  Process ID: 3834
+   Directory: /users/students/r0763954/Documents/EAGLE2/Simvision/EAGLE2_verilog_v5
+     Command: xrun ./amsSim.scs -spectre_args {+ms ++aps=liberal} -f verilogFiles.f -access +rwc -64bit -gui
+
+ 
+*** Message Type: info ***
+When: Sun Dec 13 04:41:54 PM CET 2020
+Create utility window: "Properties"
+ 
+*** Message Type: info ***
+When: Sun Dec 13 04:42:02 PM CET 2020
+Create waveform window: "Waveform 1"
+ 
+*** Message Type: info ***
+When: Sun Dec 13 04:53:36 PM CET 2020
+Create expression window: "Expression Calculator 1"
+ 
+*** Message Type: info ***
+When: Sun Dec 13 04:54:30 PM CET 2020
+Delete expression window: "Expression Calculator 1"
+ 
+*** Message Type: info ***
+When: Sun Dec 13 05:14:26 PM CET 2020
+Exit XM-Sim: user
+      Design: worklib.Counter:v
+   Languages: verilog verilog-ams
+   Simulator: XM-Sim
+     Version: TOOL:      xmsim(64)       19.03-s013
+        User: r0763954
+        Host: vierre64-tmp3.esat.kuleuven.be
+Time Started: Sun Dec 13 04:41:40 PM CET 2020
+  Process ID: 3834
+   Directory: /users/students/r0763954/Documents/EAGLE2/Simvision/EAGLE2_verilog_v5
+     Command: xrun ./amsSim.scs -spectre_args {+ms ++aps=liberal} -f verilogFiles.f -access +rwc -64bit -gui
+
+ 
+*** Message Type: error ***
+When: Sun Dec 13 05:14:28 PM CET 2020
+XM-Sim Crashed:
+      Design: worklib.Counter:v
+   Languages: verilog verilog-ams
+   Simulator: XM-Sim
+     Version: TOOL:      xmsim(64)       19.03-s013
+        User: r0763954
+        Host: vierre64-tmp3.esat.kuleuven.be
+Time Started: Sun Dec 13 04:41:40 PM CET 2020
+  Process ID: 3834
+   Directory: /users/students/r0763954/Documents/EAGLE2/Simvision/EAGLE2_verilog_v5
+     Command: xrun ./amsSim.scs -spectre_args {+ms ++aps=liberal} -f verilogFiles.f -access +rwc -64bit -gui
+      Design: worklib.Counter:v
+   Languages: verilog verilog-ams
+   Simulator: XM-Sim
+     Version: TOOL:     xmsim(64)       19.03-s013
+        User: r0763954
+        Host: vierre64-tmp3.esat.kuleuven.be
+Time Started: Sun Dec 13 04:41:40 PM CET 2020
+  Process ID: 3834
+   Directory: /users/students/r0763954/Documents/EAGLE2/Simvision/EAGLE2_verilog_v5
+     Command: xrun ./amsSim.scs -spectre_args {+ms ++aps=liberal} -f verilogFiles.f -access +rwc -64bit -gui
+
+Outstanding STRAP Requests:
+        strap::report enable out
+ 
+*** Message Type: info ***
+When: Sun Dec 13 05:14:29 PM CET 2020
+SimVision Exit.
+ 

@@ -1,0 +1,47 @@
+always @(posedge clk)begin
+		if(swiptAlive && nrst && ~data_start)begin
+		    if(~freq_optimum)begin
+				//FREQ OPT ALG
+		        data_go_reg <= 0;
+	            if(freq_rdy == 1 && freq_set_up_down)begin
+	                freq <= freq + delta_freq;
+	            end
+	            else if (freq_rdy == 1 && ~freq_set_up_down) begin
+	                freq <= freq - delta_freq;
+	            end
+		    end
+		    else if(~power_optimum)begin
+				//POWER OPT ALG
+		        data_go_reg <= 0;
+		    end
+		    else begin
+		        data_go_reg <= 1;
+		    end
+		end
+		
+		//CHECK IF DATA GO
+		if(data_go && nrst)begin
+			if(data_check_buf == 0)begin
+				data_start_reg <= 1;
+			end
+			else begin
+				data_check_buf <= data_check_buf - 1;
+				data_start_reg <= 0;
+			end
+		end
+		else begin
+			data_check_buf <= 20'h7A120;
+			data_start_reg <= 0;
+		end
+	end
+
+	//CHECK FREQUENCY OPTIMUM
+	always @(negedge freq_optimum)begin
+		data_go_reg <= 0;
+		data_start_reg <= 0;
+	end
+
+	//REFRESH BEST FREQUENCY
+	always @(posedge data_go)begin
+		freq <= best_freq;
+	end

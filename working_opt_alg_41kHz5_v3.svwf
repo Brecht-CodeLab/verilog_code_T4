@@ -1,0 +1,92 @@
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+array unset createdGroup
+array set createdGroup {}
+set id [waveform add -signals  {
+	waves::toplevel.clk
+	} ]
+set id [waveform add -signals  {
+	waves::toplevel.nrst
+	} ]
+set id [waveform add -signals  {
+	waves::toplevel.SWIPT_OUT0
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for V -min 1.0017328696245917e-09 -max 4.9986670211351569 -scale linear
+set id [waveform add -signals  {
+	waves::toplevel.SWIPT_OUT1
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for V -min 1.0017328707569751e-09 -max 4.9986670211349349 -scale linear
+set id [waveform add -signals  {
+	waves::toplevel.SWIPT_OUT2
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for V -min -6.2667171063512939e-08 -max 4.9986670242998343 -scale linear
+set id [waveform add -signals  {
+	waves::toplevel.SWIPT_OUT3
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for V -min -3.338216619797052e-09 -max 4.9986670919657374 -scale linear
+set id [waveform add -signals  {
+	{waves::toplevel.inst_ANALOG_NETWORK.XX3.L1.\1_$flow }
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for A -min -25.275410078615174 -max 25.304862142343218 -scale linear
+set id [waveform add -signals  {
+	{(waves::toplevel.inst_ANALOG_NETWORK.ADCp - waves::toplevel.inst_ANALOG_NETWORK.ADCn)}
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for V -min -0.75766521694435685 -max 0.75899106957892304 -scale linear
+set id [waveform add -signals  {
+	{waves::toplevel.ADC_in[11:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::toplevel.inst_freq.highest_so_far[11:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::toplevel.inst_freq.lowest_so_far[11:0]}
+	} ]
+set id [waveform add -signals  {
+	waves::toplevel.inst_freq.lets_go
+	} ]
+set id [waveform add -signals  {
+	{waves::toplevel.inst_freq.best_freq[19:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{waves::toplevel.freq[19:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	waves::toplevel.freq_rdy
+	} ]
+set id [waveform add -signals  {
+	waves::toplevel.freq_set_up_down
+	} ]
+set id [waveform add -signals  {
+	waves::toplevel.freq_optimum
+	} ]
+set id [waveform add -signals  {
+	waves::toplevel.data_go
+	} ]
+set id [waveform add -signals  {
+	waves::toplevel.data_start
+	} ]
+set id [waveform add -signals  {
+	waves::toplevel.d
+	} ]
+set id [waveform add -signals  {
+	{waves::toplevel.l[3:0]}
+	} ]
+
+waveform xview limits 36.998449321462679ms 97.086598825ms

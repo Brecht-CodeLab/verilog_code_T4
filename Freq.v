@@ -25,9 +25,9 @@ module Freq (
     
     //clk = 50MHz; Samp = 1MHz; Power ~= 40khz --> #clk_cycl/period_power ~= 50*25 = 1250 clk_cycli/power_cyclus
     //If we choose around 4 power_cycli to messure --> clk_counter = 4*1250 = 5000
-    reg [19:0] clk_cycles = 20'h1E848; //Every highest messurement is done over 5000 clk_cycles
+    reg [19:0] clk_cycles = 20'hF424; //Every highest messurement is done over 5000 clk_cycles
 
-    reg [19:0] threshold = 20'hA0; //Treshhold is default 5/2048 = 0,244 % - Can be modified (2048 = 11bit = 12'h7FF)
+    reg [19:0] threshold = 20'h66; //Treshhold is default 5/2048 = 0,244 % - Can be modified (2048 = 11bit = 12'h7FF)
     
     always @(posedge clk)begin
 
@@ -36,14 +36,14 @@ module Freq (
             freq_ready <= 0;
             freq_set_up_down <= 1; //Default is up
             freq_opt <= 0; //Default is no optimum
-            clk_cycles <= 20'h1E848;
+            clk_cycles <= 20'hF424;
 
             old_highest <= 12'h000;
             new_highest <= 12'h000;
         end
 		else if(data_start)begin
 			freq_ready <= 0;
-            clk_cycles <= 20'h1E848;
+            clk_cycles <=20'hF424;
 
             old_highest <= 12'h000;
             new_highest <= 12'h000;
@@ -54,7 +54,7 @@ module Freq (
             //duration: 5000 clk_cycles each
             old_highest <= new_highest;
 			new_highest <= 12'h000;
-            clk_cycles <= 20'h1E848;
+            clk_cycles <= 20'hF424;
 
             if(old_highest < new_highest)begin
 				$display("Right direction");
@@ -76,7 +76,7 @@ module Freq (
             end
         end
 
-        else if(clk_cycles < 20'hF424)begin
+        else if(clk_cycles < 20'h7A12)begin
             //Compare the new current value to the existing highest one
             //new_highest is always a value between 0 and 7FF = 11bit
 			freq_ready <= 0;
@@ -105,7 +105,6 @@ module Freq (
 		end
 
 		if(counter_freq_opt == 4 && freq_ready)begin
-			counter_freq_opt <= counter_freq_opt + 1;
 			if(highest_so_far > 12'h6CB)begin
 				freq_opt <= 0;
 				l_rdy <= 1;
@@ -124,7 +123,7 @@ module Freq (
 			end
 			else begin
 				freq_opt <= 0;
-				threshold <= 12'hA0;
+				threshold <= 12'h66;
 				l_rdy <= 0;
 				l_up_down <= 1;
 			end

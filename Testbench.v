@@ -18,7 +18,7 @@ module toplevel ();
 	//--GIVEN INPUTS AND OUTPUTS (for now they are not perfectly right)--//
 
 	//--DEFINITION OF CLK, NRST AND SWIPTONHEARTBEAT--//
-	always #10000 clk = ~clk;
+	always #5000 clk = ~clk;
 	always #900000 swiptONHeartbeat <= ~swiptONHeartbeat;
 
 	// Reset

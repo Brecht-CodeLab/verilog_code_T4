@@ -19,19 +19,11 @@ module Data (
 //Description:
 //	This module regulates all the data transfer from/to the drone to/from the ground.
 //	Communication from the drone to the ground are 20 bits (40 bit manchester code) and
-//	is a standard for EAGLE SWIPT2: 000   00   00   1100100101   000
-//									strt  stng type	data		 end
+//	is a standard for EAGLE SWIPT2: 000   00   00   00100101    0  00
+//									strt  mode type	data		cs	end
 //	strt: start sequence
-//	stng: setting = what we are sending:
-//		00: startup (answer required)
-//		01: power optimization
-//		11: data
-//		10: a question (answer required)
+//	mode: what we are sending:
 //	type: only for data and questions
-//		00: power
-//		01: efficienty
-//		11: current DC
-//		10: voltage DC
 //	data: rough data (voltage, current, power, efficientie), fixed point
 //	end: end sequence
 //	
@@ -51,10 +43,10 @@ module Data (
 //Outputs:
 //	dout: the data wire that goes to CalcL to adjust the duty cycle
 //Variables:
-//	setting: 2 bit number in bitstream
+//	mode: 2 bit number in bitstream
 //*********************************************************//
 	
-	reg [1:0] setting = 2'b00;
+	reg [1:0] mode = 2'b00;
 	reg l_up_down_reg = 1;
 	reg l_rdy_reg = 0;
 	reg get_mean_curr_reg = 0;
@@ -65,7 +57,7 @@ module Data (
 	reg din_reg = 0;
 	reg read_reg = 0;
 	reg [19:0] clk_cycles = 20'h9C40;
-	reg [11:0] highest = 0;
+	reg [11:0] lowest = 0;
 	reg [19:0] deaf = 20'h7A120;
 	reg [23:0] read_timer_default = 24'h2625A0;
 	reg [23:0] read_timer = 24'h2625A0; //2 500 000 clk cycli == 25ms wait time for answer
@@ -76,8 +68,8 @@ module Data (
 	reg write_reg = 1;
 	reg [19:0] write_timer_default = 20'h186A0;
 	reg [19:0] write_timer = 20'h186A0;
-	reg [7:0] stream_counter = 8'h27;
-	reg [39:0] datastream = 40'b10_10_10_10_10_01_01_01_01_01_01_01_01_01_01_01_01_10_10_10;
+	reg [7:0] stream_counter = 8'h23;
+	reg [35:0] datastream = 36'b_101010_1010_1010_1010101010101010_10_0101;
 
 	//OUPUT
 	reg dout_reg = 0;
@@ -85,10 +77,10 @@ module Data (
 	always @(posedge clk)begin
 	//WRITE & ACTIONS
 		if(~nrst || ~data_start)begin
-			setting <= 2'b00;
+			mode <= 2'b00;
 			dout_reg <= 0;
-			datastream <= 40'b10_10_10_10_10_01_01_01_01_01_01_01_01_01_01_01_01_10_10_10;
-			stream_counter <= 8'h27;
+			datastream <= 36'b_101010_1010_1010_1010101010101010_10_0101;
+			stream_counter <= 8'h23;
 			l_up_down_reg <= 1;
 			l_rdy_reg <= 0;
 			get_mean_curr_reg <= 0;
@@ -97,12 +89,12 @@ module Data (
 		end
 
 		//STARTUP
-		else if(setting == 2'b00)begin
+		else if(mode == 2'b00)begin
 			if(write && write_timer == 0)begin
 				if (stream_counter == 0)begin
 					write_reg <= 0;
 					read_reg <= 1;
-					stream_counter <= 8'h27;
+					stream_counter <= 8'h23;
 				end
 				else begin
 					stream_counter <= stream_counter - 1;
@@ -117,12 +109,12 @@ module Data (
 			end
 			else if(read && read_timer == 0)begin
 				if(answer_00 == 1'b1)begin
-					setting <= 2'b01;
+					mode <= 2'b01;
 					write_reg <= 1;
 					read_reg <= 0;
 					read_timer <= read_timer_default;
 					get_mean_curr_reg <= 0;
-					datastream <= 40'b10_10_10_10_01_01_01_01_01_01_01_01_01_01_01_01_01_10_10_10;
+					datastream <= 36'b_101010_1010_1010_1010101010101010_10_1010;
 				end
 				else begin
 					if(~l_set)begin
@@ -151,12 +143,12 @@ module Data (
 		end
 
 		//POWER OPTIMIZATION
-		else if(setting == 2'b01)begin
+		else if(mode == 2'b01)begin
 			if(write && write_timer == 0)begin
 				if (stream_counter == 0)begin
 					write_reg <= 0;
 					read_reg <= 1;
-					stream_counter <= 8'h27;
+					stream_counter <= 8'h23;
 				end
 				else begin
 					stream_counter <= stream_counter - 1;
@@ -171,12 +163,12 @@ module Data (
 			end
 			else if(read && read_timer == 0)begin
 				if(answer_01 > 2'b01)begin
-					setting <= 2'b11;
+					mode <= 2'b11;
 					write_reg <= 1;
 					read_reg <= 0;
 					read_timer <= read_timer_default;
 					get_mean_curr_reg <= 0;
-					datastream <= 40'b10_10_10_01_01_01_10_01_01_10_01_10_01_10_01_10_01_10_10_10;
+					datastream <= 36'b_101010_1010_1010_1010101010101010_10_1010;
 				end
 				else if(answer_01 == 2'b01)begin
 					//l down
@@ -224,11 +216,11 @@ module Data (
 		end
 
 		//DATA TRANSFER
-		else if(setting == 2'b11)begin
+		else if(mode == 2'b11)begin
 			if(write && write_timer == 0)begin
 				if (stream_counter == 0)begin
 					//Temporary algorithm
-					stream_counter <= 8'h27;
+					stream_counter <= 8'h23;
 					//Final algorithm
 					//write_reg <= 0;
 					//read_reg <= 1;
@@ -247,7 +239,7 @@ module Data (
 		end
 
 		//ASK QUESTION
-		else if(setting == 2'b10)begin
+		else if(mode == 2'b10)begin
 
 		end
 
@@ -256,16 +248,16 @@ module Data (
 		//READ DATA
 		if(~nrst || ~data_start || ~read || get_mean_curr)begin
 			clk_cycles <= 20'h9C40;
-			highest <= 0;
+			lowest <= 0;
 			din_reg <= 0;
 			deaf <= 20'h7A120;
 		end
 		else if(deaf == 0)begin
 			if(clk_cycles == 20'h0)begin
-				highest <= mean_def;
+				lowest <= mean_def;
 				clk_cycles <= 20'h9C40;
 				
-				if(highest > (mean_def + mean_def/20))begin
+				if(lowest < (mean_def - mean_def/15))begin
 					din_reg <= 1;
 				end
 				else begin
@@ -274,11 +266,11 @@ module Data (
 			end
 			else begin
 				clk_cycles <= clk_cycles - 1;
-				if(ADC < 12'h800 && ADC > highest)begin
-					highest <= ADC;
+				if(ADC < 12'h800 && ADC > lowest)begin
+					lowest <= ADC;
 				end
-				else if(ADC >= 12'h800 && 12'hFFF - ADC > highest)begin
-                	highest <= 12'hFFF - ADC;
+				else if(ADC >= 12'h800 && 12'hFFF - ADC > lowest)begin
+                	lowest <= 12'hFFF - ADC;
             	end
 			end
 		end
@@ -299,10 +291,10 @@ module Data (
 			answer_00 <= 1'b0;
 			answer_01 <= 2'b0;
 		end
-		else if(setting == 2'b00)begin
+		else if(mode == 2'b00)begin
 			answer_00 <= 1'b1;
 		end
-		else if(setting == 2'b01)begin
+		else if(mode == 2'b01)begin
 			answer_01 <= answer_01 + 1;
 		end
 	end

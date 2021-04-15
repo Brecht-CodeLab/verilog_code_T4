@@ -12,7 +12,7 @@ module SwiptOut (
 	);
 
 	//Parameters that are needed to run the program
-	reg [27:0] clk_f = 28'h2FAF080;
+	reg [27:0] clk_f = 28'h5F5E100;
 	reg checkStart = 1'b0;
 	reg [3:0] deadTimeL = 4'hE;
 	reg [3:0] dead_counter = 4'hE;
@@ -26,7 +26,7 @@ module SwiptOut (
 
     //Pulselength is the time (#clk_cycles) that a MOS is high --> can change to 20% if data is transfered
     //Default is x% of duty cycle with x given by the power optimization algorithm
-    //If we use a specific kind of data transmission (ex: 0V,2.5V and 5V) this is also possible by setting the pulse time on different lenghts
+    //If we use a specific kind of data transmission (ex: 0V,2.5V and 5V) this is also possible by mode the pulse time on different lenghts
 
 
     reg [11:0] pulse_length; //Default pulse-length 48% for now
